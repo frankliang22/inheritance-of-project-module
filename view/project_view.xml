@@ -1,0 +1,316 @@
+<openerp>
+<data>
+
+        <record model="ir.ui.view" id="new_project_project_form_view">
+          <field name="name">project.project.form</field>
+          <field name="model">project.project</field>
+          <field name="inherit_id" ref="project.edit_project" />
+          <field name="arch" type="xml">
+            <field name="user_id" position="after">
+              <field name="po_id" />
+              <field name="responsible_id" />
+              <field name="x_type" />
+              <field name="x_business_type" />
+              <field name="x_process_type" />
+              <field name="x_project_number" />
+              <field name="x_SAP" />
+              <field name="x_redmine" />
+            </field>
+             <field name="partner_id" position="after">
+              <group string="Status">
+                <field name="stage" />
+                <field name="milestone" />
+                <field name="phase" />
+                <field name="project_status" />
+                <field name="x_projoect_description" />
+                <field name="x_notes" />
+                <field name="x_customer_duration" />  
+                <field name="x_actual_duration" attrs="{'required':[('project_status', '=', 'Award')]}"/>  
+                <field name="x_engineering_estimate" />
+                <field name="x_project_lifecycle" />
+              </group> 
+            </field>
+            <page string="Team" position="after">
+              
+              <page string="Dates">
+                <group>
+                <group string="Dates">
+                <field name="x_enquiry_date" />
+                <field name="x_prd_initial_date" />
+                <field name="x_prd_complete" />
+                <field name="x_expected_award_date" />
+                <field name="x_actual_award_date" />
+                <field name="x_checklist_complete" />
+                <field name="x_target_mp" />
+                <field name="x_ship_date" />
+              </group>
+               <group string="Project Phase Fields">
+                <field name="x_duration"  />
+                <field name="x_design_phase_schedule"  />
+                <field name="x_design_phase_current"  />
+                <field name="x_dvr_schedule"  />
+                <field name="x_dvr_current"  />
+                <field name="x_pp_schedule"  />
+                <field name="x_pp_current"  />
+                <field name="x_stage" invisible='1' />
+                <field name="x_mp_schedule" string="MP Schedule" attrs="{'required':[('x_stage','in',('DV1','DV2','DV3','ES1','ES2','PP1','PP2','MP1','MP2','CE','MP'))]}"/>
+                <field name="x_mp_current" string="MP Current" attrs="{'required':[('x_stage','in',('DV1','DV2','DV3','ES1','ES2','PP1','PP2','MP1','MP2','CE','MP'))]}"/>
+                </group>         
+                </group>
+              </page>
+
+              <page string="Loads" >
+              <group string="Estimate Project Loads">
+                <group>
+                  <field name="x_lead_swe_load" string="Lead Software Engineer Load" />
+                  <field name="x_lead_ee_load" string="Lead EE Load" />
+                  <field name="x_swe_load" string="Software Engineer Load" />
+                  <field name="x_ee_load" string="EE Load" />
+                  <field name="x_ee_tech_load" string="EE Technician Load" />
+                  <field name="x_lead_se_load" string="LSE Load" />
+                  <field name="x_se_load" string="SE Load" />
+                  <field name="x_lead_system_me_load" string="Lead System ME Load" />
+                  <field name="x_system_me_load" string="System ME Load" />
+                  <field name="x_lead_technical_engineer_load" string="Lead TE Load" />
+                  <field name="x_technical_engineer_load" string="TE Load" />
+                  <field name="x_pjm_load" string="PJM Load" />
+                </group>
+                
+                <group>
+                  <field name="x_lead_swe_test_load" string="Lead Software Test Load" />
+                  <field name="x_swe_test_load" string="Software Test Load" />
+                  <field name="x_te_me_load" string="TE ME Load" />
+                  <field name="x_ppo_load" string="PPO Load" />
+                  <field name="x_ppe_load" string="PPE Load" />
+                  <field name="x_lead_pt_load" string="Lead PT Load" />
+                  <field name="x_pt_load" string="PT Load" />
+                  <field name="x_qe_load" string="QE Load" />
+                </group>
+              </group>
+              </page>
+
+              <page string="Pricing" >
+                <group >
+                  <group string="Pricing Information">
+                    <field name="x_quote_status" string="Quote Status" />
+                    <field name="x_sales_feedback" string="Sales Feedback" />
+                    <field name="x_quantity" string="Annual Quantity" />
+                    <field name="x_target_price" string="Target Price" />
+                    <field name="x_revenue" string="Revenue" />
+                    <field name="x_project_winning_percentage" string="Winning Percentage" />
+                    <field name="x_cancel_reason" string="Cancel Reason"/>
+                    <field name="x_lost_reason" string="Lost Reason" />
+                    <field name="x_remark" string="Remarks" />
+                  </group>
+                  <group string="Pricing Dates">
+                    <field name="x_rfq_receive_date" string="RFQ Receive Date" />
+                    <field name="x_cr_approved_date" string="CR Approval Date" />
+                    <field name="x_lost_date" string="Cancel/ Lost Date" />
+                    <field name="x_on_hold_date" string="On Hold Date" />
+                  </group>
+                </group>
+              </page>
+            
+            </page>
+
+
+            <xpath expr="/form/sheet/group/group/p/field[@name='analytic_account_id']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/group/group/p" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>  
+            <xpath expr="/form/sheet/notebook/page[@string='Other Info']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page[@string='Project Stages']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+          </field> 
+        </record>
+
+        <record model="ir.actions.act_window" id="project_project_list_action">
+         <field name="name">Project</field>
+         <field name="res_model">project.project</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="new_project_task_form_view">
+          <field name="name">project.task.form</field>  
+          <field name="model">project.task</field>
+          <field name="inherit_id" ref="project.view_task_form2" /> 
+          <field name="arch" type="xml">
+            <field name="project_id" position="after">
+              <group>
+                <field name="partner_id" />
+                <field name="user_id" />
+                <field name="x_rfq_receive_date" />
+                <field name="x_introduction_meeting_date" />
+                <field name="x_quote_sent_to_customer" />
+                <field name="x_quotation_stage" />
+                <field name="x_sales_person" />
+                <field name="x_begin_wait_for_sales" />
+              </group>
+              <group>
+                <field name="project_id" />
+                <field name="x_ppe_person" />
+                <field name="x_study_meeting" />
+                <field name="x_information_preparation_date" />
+                <field name="x_issue" />
+                <field name="x_department" />
+                <field name="x_estimate_response_date" />
+              </group>
+            </field>
+
+            <page string="Description" position="after">
+              <page string="Pricing Dates">
+                <group col="6">
+                  <field name="x_expected_me_bom_release" />
+                  <field name="x_actual_me_bom_release" />
+                  <field name="x_me_difference" />
+                  <field name="x_expected_te_bom_release" />
+                  <field name="x_actual_te_bom_release" />
+                  <field name="x_te_difference" />
+                  <field name="x_expected_se_bom_release" />
+                  <field name="x_actual_se_bom_release" />
+                  <field name="x_se_difference" />
+                  <field name="x_expected_ee_bom_release" />
+                  <field name="x_actual_ee_bom_release" />
+                  <field name="x_ee_difference" />  
+                  <field name="x_expected_bbom_review" />
+                  <field name="x_actual_bbom_review" />
+                  <field name="x_b_difference" />
+                  <field name="x_expected_cbom_release" />
+                  <field name="x_actual_cbom_release" />
+                  <field name="x_c_difference" />
+                  <field name="x_expected_ebom_review" />
+                  <field name="x_actual_ebom_review" />
+                  <field name="x_e_difference" />
+                  <field name="x_expected_vbom_release" />
+                  <field name="x_actual_vbom_release" />
+                  <field name="x_v_difference" />
+                  <field name="x_expected_sales_feedback" />
+                  <field name="x_actual_sales_feedback" />
+                  <field name="x_sales_difference" /> 
+                </group>
+              </page>
+
+              <page string="Pricing Info">
+               <group col="4">
+                  <field name="x_vbom_version" />
+                  <field name="x_final_price" />
+                  <field name="x_eng_cost_act" />
+                  <field name="x_eng_cost_cust" />
+                  <field name="x_ROE" />
+               </group>
+              </page>
+
+              <page string="Quote Status">
+               <group col="4">
+                  <field name="x_quote_status"/>
+               </group>
+              </page>
+
+              <page string="Sales Status">
+                <group col="4">
+                  <field name="x_sales_status"/>
+                </group>
+              </page>
+          </page>
+
+            <xpath expr="/form/sheet/notebook/page[@string='Extra Info']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page[@string='Description']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/group/group/field[@name='project_id']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/group/group/field[@name='user_id']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/group/group/field[@name='date_deadline']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/group/group/field[@name='categ_ids']" position="attributes"> 
+                <attribute name="invisible">True</attribute>
+            </xpath>
+          </field> 
+        </record>  
+
+        <record model="ir.ui.view" id="new_project_task_tree_view">
+          <field name="name">project.task.tree</field>  
+          <field name="model">project.task</field>
+          <field name="inherit_id" ref="project.view_task_tree2" /> 
+          <field name="arch" type="xml">
+            <field name="stage_id"  position="after">
+            <field name="x_rfq_receive_date" />
+            <field name="x_study_meeting" />
+
+            <field name="x_introduction_meeting_date" />
+            <field name="x_information_preparation_date" />
+            <field name="x_quote_sent_to_customer" />
+                                
+            <field name="x_expected_me_bom_release" />
+            <field name="x_actual_me_bom_release" />
+            <field name="x_me_difference" />
+
+            <field name="x_expected_te_bom_release" />
+            <field name="x_actual_te_bom_release" />
+            <field name="x_te_difference" />
+
+            <field name="x_expected_se_bom_release" />
+            <field name="x_actual_se_bom_release" />
+            <field name="x_se_difference" />
+
+            <field name="x_expected_ee_bom_release" />
+            <field name="x_actual_ee_bom_release" />
+            <field name="x_ee_difference" />
+
+            <field name="x_expected_bbom_review" />
+            <field name="x_actual_bbom_review" />
+            <field name="x_b_difference" />
+
+            <field name="x_expected_cbom_release" />
+            <field name="x_actual_cbom_release" />
+            <field name="x_c_difference" />
+
+            <field name="x_expected_ebom_review" />
+            <field name="x_actual_ebom_review" />
+            <field name="x_e_difference" />
+
+            <field name="x_expected_vbom_release" />
+            <field name="x_actual_vbom_release" />
+            <field name="x_v_difference" />
+
+            <field name="x_expected_sales_feedback" />
+            <field name="x_actual_sales_feedback" />
+            <field name="x_sales_difference" />
+          </field>
+          </field>
+        </record>
+        
+
+        <record model="ir.actions.act_window" id="project_task_list_action">
+         <field name="name">Project</field>
+         <field name="res_model">project.task</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,form</field>
+        </record>  
+         
+         <menuitem id="main_project_menu" name="New Project" />
+         <menuitem id="project1_project_menu" name="Project"
+                   parent="main_project_menu" />
+         <menuitem id="project2_project_menu" name="Project"
+                   parent="project1_project_menu"
+                   action="project_project_list_action" />
+         <menuitem id="project1_task_menu" name="Task"
+                   parent="main_project_menu" />
+         <menuitem id="project2_task_menu" name="Task"
+                   parent="project1_task_menu"
+                   action="project_task_list_action" />  
+
+</data>
+</openerp>
